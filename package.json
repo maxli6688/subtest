@@ -3,12 +3,13 @@
   "version": "0.1.0",
   "scripts": {
     "build-contract": "solc contracts/Gravity.sol --abi -o abis --overwrite && solc contracts/Gravity.sol --bin -o bin --overwrite",
-    "create": "graph create sub1joyali/sub1 --node https://api.thegraph.com/deploy/",
-    "create-local": "graph create sub1joyali/sub1 --node http://127.0.0.1:8020",
+    "build:space-abi": "solc contracts/Space.sol --abi -o abis --overwrite && solc contracts/Space.sol --bin -o bin --overwrite",
+    "create": "graph create maxli6688/subtest --node https://api.thegraph.com/deploy/",
+    "create-local": "graph create maxli6688/subtest --node http://127.0.0.1:8020",
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy": "graph deploy sub1joyali/sub1 --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
-    "deploy-local": "graph deploy sub1joyali/sub1 --ipfs http://127.0.0.1:5001 --node http://127.0.0.1:8020"
+    "deploy": "graph deploy maxli6688/subtest --ipfs https://api.thegraph.com/ipfs/ --node https://api.thegraph.com/deploy/",
+    "deploy-local": "graph deploy maxli6688/subtest --ipfs http://127.0.0.1:5001 --node http://127.0.0.1:8020"
   },
   "devDependencies": {
     "@graphprotocol/graph-cli": "^0.30.2",
