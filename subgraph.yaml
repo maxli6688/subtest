@@ -3,6 +3,9 @@ description: Gravatar for Ethereum
 repository: https://github.com/maxli6688/subtest
 schema:
   file: ./schema.graphql
+features:
+  - fullTextSearch
+  - ipfsOnEthereumContracts
 dataSources:
   - kind: ethereum/contract
     name: SpaceManager
