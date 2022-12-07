@@ -4,27 +4,25 @@ repository: https://github.com/maxli6688/subtest
 schema:
   file: ./schema.graphql
 dataSources:
-  # - kind: ethereum/contract
-  #   name: Gravity
-  #   network: mainnet
-  #   source:
-  #     address: "0x2E645469f354BB4F5c8a05B3b30A929361cf77eC"
-  #     abi: Gravity
-  #   mapping:
-  #     kind: ethereum/events
-  #     apiVersion: 0.0.5
-  #     language: wasm/assemblyscript
-  #     entities:
-  #       - Gravatar
-  #     abis:
-  #       - name: Gravity
-  #         file: ./abis/Gravity.json
-  #     eventHandlers:
-  #       - event: NewGravatar(uint256,address,string,string)
-  #         handler: handleNewGravatar
-  #       - event: UpdatedGravatar(uint256,address,string,string)
-  #         handler: handleUpdatedGravatar
-  #     file: ./src/mapping.ts
+  - kind: ethereum/contract
+    name: SpaceManager
+    network: goerli
+    source:
+      address: "0x181738942D40f21D5e2643fE06d482b692623BDF"
+      abi: SpaceManager
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.5
+      language: wasm/assemblyscript
+      entities:
+        - SpaceManager
+      abis:
+        - name: SpaceManager
+          file: ./abis/SpaceManager.json
+      eventHandlers:
+        - event: NewSpaceRegistered(indexed uint256,indexed address,string)
+          handler: handleNewSpaceRegistered
+      file: ./src/mapping.ts
 
   # ---------------------------------------------------------
   # SPACE -------------------------------------------------

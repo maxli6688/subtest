@@ -4,3 +4,12 @@ type Space @entity {
   displayName: String!
   imageUrl: String!
 }
+
+type SpaceManager @entity {
+  id: ID!
+  owner: Bytes!
+  metadataUrl: String!
+  name: String!
+  image: String!
+  description: String!
+}
