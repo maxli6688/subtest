@@ -1,5 +1,5 @@
 specVersion: 0.0.4
-description: Gravatar for Ethereum
+description: contentfi space for Ethereum
 repository: https://github.com/maxli6688/subtest
 schema:
   file: ./schema.graphql
@@ -7,6 +7,9 @@ features:
   - fullTextSearch
   - ipfsOnEthereumContracts
 dataSources:
+  # ---------------------------------------------------------
+  # SPACE MANAGER -------------------------------------------------
+  # ---------------------------------------------------------
   - kind: ethereum/contract
     name: SpaceManager
     network: goerli

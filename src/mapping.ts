@@ -19,7 +19,7 @@
 //   gravatar.imageUrl = event.params.imageUrl
 //   gravatar.save()
 // }
-import { ipfs, json, JSONValueKind } from '@graphprotocol/graph-ts'
+import { Bytes, ipfs, json, JSONValueKind } from '@graphprotocol/graph-ts'
 
 import { NewGravatar, UpdatedGravatar } from '../generated/Space/Space'
 import { NewSpaceRegistered } from '../generated/SpaceManager/SpaceManager'
@@ -53,20 +53,30 @@ export function handleNewSpaceRegistered(event: NewSpaceRegistered): void {
   }
   space.owner = event.params.registerAddress
   space.metadataUrl = event.params.detail
+  space.name = ''
+  space.description = ''
+  space.image = ''
   const path = space.metadataUrl.replace('ipfs://', '')
-  const data = ipfs.cat(path)
-  // space.name = event.params.imageUrl
-  if (data) {
-    const res = json.fromBytes(data)
-    if (res.kind === JSONValueKind.OBJECT) {
-      const obj = res.toObject()
-      if (obj.get('name')) {
-        space.name = obj.get('name')!.toString()
-      }
-      if (obj.get('description')) {
-        space.description = obj.get('description')!.toString()
-      }
+  const ipfsData = ipfs.cat(path)
+  // if (ipfsData != null) {
+  if (ipfsData) {
+    // const res = json.fromBytes(ipfsData)
+    // if (res.kind === JSONValueKind.OBJECT) {
+    // const data = res.toObject()
+    const data = json.fromBytes(ipfsData as Bytes).toObject()
+    if (data.get('name')) {
+      space.name = data.get('name')!.toString()
+    }
+    if (data.get('description')) {
+      space.description = data.get('description')!.toString()
+    }
+    if (data.get('image')) {
+      // space.image = data.get('image')?.isNull ? "" : data.get('image')!.toString()
+      space.image = data.get('image')!.toString()
     }
   }
+  // let hexHash = addQm(event.params.details) as Bytes
+  // let base58Hash = hexHash.toBase58()
+  // space.ipfsHash = base58Hash
   space.save()
 }
