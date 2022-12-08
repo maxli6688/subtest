@@ -22,7 +22,7 @@
 import { Bytes, ipfs, json, JSONValueKind } from '@graphprotocol/graph-ts'
 
 import { NewGravatar, UpdatedGravatar } from '../generated/Space/Space'
-import { NewSpaceRegistered } from '../generated/SpaceManager/SpaceManager'
+import { NewSpaceRegistered, UpdatedSpace } from '../generated/SpaceManager/SpaceManager'
 import { Space, SpaceManager } from '../generated/schema'
 
 export function handleNewGravatar(event: NewGravatar): void {
@@ -78,5 +78,32 @@ export function handleNewSpaceRegistered(event: NewSpaceRegistered): void {
   // let hexHash = addQm(event.params.details) as Bytes
   // let base58Hash = hexHash.toBase58()
   // space.ipfsHash = base58Hash
+  space.save()
+}
+
+export function handleUpdatedSpace(event: UpdatedSpace): void {
+  let id = event.params.spaceId.toHex()
+  let space = SpaceManager.load(id)
+  if (space == null) {
+    space = new SpaceManager(id)
+  }
+  space.metadataUrl = event.params.newDetail
+  space.name = ''
+  space.description = ''
+  space.image = ''
+  const path = space.metadataUrl.replace('ipfs://', '')
+  const ipfsData = ipfs.cat(path)
+  if (ipfsData) {
+    const data = json.fromBytes(ipfsData as Bytes).toObject()
+    if (data.get('name')) {
+      space.name = data.get('name')!.toString()
+    }
+    if (data.get('description')) {
+      space.description = data.get('description')!.toString()
+    }
+    if (data.get('image')) {
+      space.image = data.get('image')!.toString()
+    }
+  }
   space.save()
 }

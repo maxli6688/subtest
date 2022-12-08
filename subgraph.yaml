@@ -28,6 +28,8 @@ dataSources:
       eventHandlers:
         - event: NewSpaceRegistered(indexed uint256,indexed address,string)
           handler: handleNewSpaceRegistered
+        - event: UpdatedSpace(indexed uint256,string)
+          handler: handleUpdatedSpace
       file: ./src/mapping.ts
 
   # ---------------------------------------------------------
